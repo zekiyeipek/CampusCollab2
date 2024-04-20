@@ -10,7 +10,7 @@ import {
 import {Color, FontSize, FontFamily, Border} from '../GlobalStyles';
 import FilePickerManager from 'react-native-file-picker'; // Import the document picker
 import {DatePickerAndroid} from 'react-native';
-const RegisterForStudents = ({navigation}) => {
+const RegisterForAdvisors = ({navigation}) => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [studentNumber, setStudentNumber] = useState('');
@@ -66,7 +66,7 @@ const RegisterForStudents = ({navigation}) => {
             source={require('../assets/Background.png')}
           />
           <Text style={[styles.bannerLoginWelcome, styles.orClr]}>
-            Signup for Students
+            Signup for Advisors
           </Text>
           <TextInput
             style={[
@@ -522,4 +522,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterForStudents;
+export default RegisterForAdvisors;

@@ -1,8 +1,33 @@
-import * as React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {Color, FontSize, FontFamily, Border} from '../GlobalStyles';
+import FilePickerManager from 'react-native-file-picker'; // Import the document picker
+import {DatePickerAndroid} from 'react-native';
 
-const CreateCompanyProfile = () => {
+const CreateCompanyProfile = ({navigation}) => {
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAdress] = useState('');
+  const [contactInfo, setContactInfo] = useState('');
+  const [registrationNumber, setRegistrationNumber] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleLoginClick = () => {
+    navigation.navigate('Login'); // Replace 'Login' with the name of your login screen component
+  };
+
   return (
     <View style={styles.signupForCompaniesParent}>
       <View style={[styles.signupForCompanies, styles.signupPosition]}>
@@ -13,53 +38,74 @@ const CreateCompanyProfile = () => {
             resizeMode="cover"
             source={require('../assets/Background.png')}
           />
-          <Image
-            style={[styles.eyePasswordIcon, styles.iconLayout]}
-            resizeMode="cover"
-            source={require('../assets/eye_password.png')}
-          />
-          <Image
-            style={[
-              styles.signupForCompaniesContainerChild,
-              styles.signupContainerLayout2,
-            ]}
-            resizeMode="cover"
-            source={require('../assets/rectangle-2.png')}
-          />
-          <Text style={[styles.enterContactInformation, styles.enterTypo]}>
-            {'Enter Contact Information '}
+          <Text style={[styles.bannerLoginWelcome, styles.orClr]}>
+            Signup for Companies
           </Text>
-          <View
-            style={[
-              styles.signupForCompaniesContainerItem,
-              styles.signupContainerLayout1,
-            ]}
+          <TextInput
+            style={[styles.enterCompanyName, styles.enterPosition]}
+            placeholder="Enter Company Name"
+            value={fullName}
+            onChangeText={setFullName}
           />
-          <Text style={[styles.enterCompanyName, styles.enterPosition]}>
-            Enter Company Name
-          </Text>
-          <Text style={[styles.enterCompanyEMail, styles.enterPosition]}>
-            Enter Company E-mail
-          </Text>
+          <TextInput
+            style={[styles.enterCompanyEMail, styles.enterPosition]}
+            placeholder="Enter Company E-mail"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TextInput
+            style={[styles.enterAddressInformation, styles.enterPosition]}
+            placeholder="Enter Address Information"
+            value={address}
+            onChangeText={setAdress}
+          />
+          <TextInput
+            style={[styles.enterContactInformation, styles.enterPosition]}
+            placeholder="Enter Contact Information"
+            value={contactInfo}
+            onChangeText={setContactInfo}
+          />
+          <TextInput
+            style={[styles.companyRegistrationNumber, styles.enterPosition]}
+            placeholder="Company Registration Number"
+            value={registrationNumber}
+            onChangeText={setRegistrationNumber}
+          />
+          <TextInput
+            style={[styles.enterYourPassword, styles.enterPosition]}
+            placeholder="Enter Your Password"
+            secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity onPress={togglePasswordVisibility}>
+            <Image
+              style={[styles.eyePasswordIcon, styles.iconLayout]}
+              resizeMode="cover"
+              source={require('../assets/eye_password.png')}
+            />
+          </TouchableOpacity>
           <Image
             style={[
               styles.signupForCompaniesContainerInner,
               styles.signupContainerLayout2,
             ]}
             resizeMode="cover"
-            source={require('../assets/rectangle-2.png')}
+            source={require('../assets/rectangle-35.png')}
           />
           <Text style={[styles.buttonLogin, styles.orTypo]}>Signup</Text>
           <Text style={[styles.alreadyHaveAn, styles.orClr]}>
             {'Already have an account? '}
           </Text>
-          <Text style={[styles.login, styles.loginTypo1]}>Login</Text>
+          <TouchableOpacity onPress={handleLoginClick}>
+            <Text style={[styles.login, styles.loginTypo1]}>Login</Text>
+          </TouchableOpacity>
           <View style={[styles.rectangleView, styles.rectangleViewLayout]} />
           <Text style={[styles.loginWithGoogle, styles.loginTypo]}>
             Login with Google
           </Text>
           <Image
-            style={[styles.googleLogoIcon, styles.enterPosition]}
+            style={[styles.googleLogoIcon, styles.googleLogoIcon]}
             resizeMode="cover"
             source={require('../assets/google_logo.png')}
           />
@@ -111,9 +157,6 @@ const CreateCompanyProfile = () => {
               source={require('../assets/left-side.png')}
             />
           </View>
-          <Text style={[styles.bannerLoginWelcome, styles.orClr]}>
-            Signup for Companies
-          </Text>
           <View style={[styles.lineView, styles.lineViewLayout]} />
           <View
             style={[
@@ -122,40 +165,6 @@ const CreateCompanyProfile = () => {
             ]}
           />
           <Text style={[styles.or, styles.orClr]}>Or</Text>
-          <View
-            style={[
-              styles.signupForCompaniesContainerChild3,
-              styles.signupContainerLayout1,
-            ]}
-          />
-          <Text style={[styles.enterAddressInformation, styles.enterPosition]}>
-            {'Enter Address Information '}
-          </Text>
-          <View
-            style={[
-              styles.signupForCompaniesContainerChild4,
-              styles.signupContainerLayout,
-            ]}
-          />
-          <Text
-            style={[styles.companyRegistrationNumber, styles.enterPosition]}>
-            Company Registration Number
-          </Text>
-          <View
-            style={[
-              styles.signupForCompaniesContainerChild5,
-              styles.signupContainerLayout,
-            ]}
-          />
-          <Text style={[styles.enterYourPassword, styles.enterTypo]}>
-            Enter Your Password
-          </Text>
-          <View
-            style={[
-              styles.signupForCompaniesContainerChild6,
-              styles.signupContainerLayout1,
-            ]}
-          />
           <Image
             style={styles.image8Icon}
             resizeMode="cover"
@@ -201,12 +210,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   enterPosition: {
-    left: 67,
+    left: 50,
     position: 'absolute',
+    borderWidth: 1,
+    borderColor: Color.colorGray_900,
+    borderRadius: 10,
+    height: 40,
+    width: 313,
   },
   orTypo: {
     fontSize: FontSize.textSmMedium_size,
     textAlign: 'left',
+    color: Color.baseWhite,
   },
   orClr: {
     color: Color.colorGray_700,
@@ -264,7 +279,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   eyePasswordIcon: {
-    top: 468,
+    top: 478,
     left: 324,
     height: 24,
   },
@@ -334,6 +349,7 @@ const styles = StyleSheet.create({
     top: 623,
     width: 26,
     height: 26,
+    left: 65,
   },
   signupForCompaniesContainerChild1: {
     top: 670,

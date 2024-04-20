@@ -1,7 +1,8 @@
-const Stack = createNativeStackNavigator();
+import 'react-native-gesture-handler';
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Companies from './android/app/src/screens/Companies';
 //import Frame1 from './components/Frame1';
 import RegisterForCompany from './android/app/src/screens/RegisterForCompany';
@@ -15,6 +16,7 @@ import EditProjects from './android/app/src/screens/EditProjects';
 import Login from './android/app/src/screens/login';
 import Dashboard2 from './android/app/src/screens/Dashboard2';
 import RegisterForStudents from './android/app/src/screens/RegisterForStudents';
+import RegisterForAdvisors from './android/app/src/screens/RegisterForAdvisors';
 import WelcomePage from './android/app/src/screens/WelcomePage';
 import Modal from './android/app/src/screens/Modal';
 import ProjectTracking from './android/app/src/screens/ProjectTracking';
@@ -23,8 +25,10 @@ import DashboardSideBar from './android/app/src/screens/DashboardSideBar';
 import ProjectEvaluationCompany from './android/app/src/screens/ProjectEvaluationCompany';
 import ProjectEvaluationStudent from './android/app/src/screens/ProjectEvaluationStudent';
 
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {View, Text, Pressable, TouchableOpacity} from 'react-native';
+
+const Drawer = createDrawerNavigator();
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
@@ -87,6 +91,11 @@ const App = () => {
             <Stack.Screen
               name="RegisterForStudents"
               component={RegisterForStudents}
+              options={{headerShown: false}}
+            />
+            <Stack.Screen
+              name="RegisterForAdvisors"
+              component={RegisterForAdvisors}
               options={{headerShown: false}}
             />
             <Stack.Screen

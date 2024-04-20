@@ -9,17 +9,25 @@ const Modal = () => {
   const [isChecked1, setIsChecked1] = React.useState(false);
   const [isChecked2, setIsChecked2] = React.useState(false);
   const [isChecked3, setIsChecked3] = React.useState(false);
+  const [lastClickedCheckbox, setLastClickedCheckbox] = React.useState(null);
 
   const handleCheckboxToggle = checkboxNumber => {
+    setLastClickedCheckbox(checkboxNumber);
     switch (checkboxNumber) {
       case 1:
         setIsChecked1(!isChecked1);
+        setIsChecked2(false);
+        setIsChecked3(false);
         break;
       case 2:
         setIsChecked2(!isChecked2);
+        setIsChecked1(false);
+        setIsChecked3(false);
         break;
       case 3:
         setIsChecked3(!isChecked3);
+        setIsChecked1(false);
+        setIsChecked2(false);
         break;
       default:
         break;
@@ -27,14 +35,23 @@ const Modal = () => {
   };
 
   const handleConfirm = () => {
-    if (isChecked1) {
-      navigation.navigate('RegisterForStudents'); // Navigate to RegisterForStudents screen
-    } else if (isChecked2) {
-      navigation.navigate('RegisterForCompany'); // Navigate to RegisterForCompanies screen
-    } else if (isChecked3) {
-      // Handle other cases if needed
+    if (lastClickedCheckbox !== null) {
+      switch (lastClickedCheckbox) {
+        case 1:
+          navigation.navigate('RegisterForStudents');
+          break;
+        case 2:
+          navigation.navigate('RegisterForCompany');
+          break;
+        case 3:
+          navigation.navigate('RegisterForAdvisors');
+          break;
+        default:
+          break;
+      }
     } else {
-      // Handle default case if no checkbox is checked
+      // Navigate to default screen when no checkbox is clicked
+      navigation.navigate('DefaultScreen');
     }
   };
 
@@ -229,8 +246,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10, // Added horizontal padding of 10px
   },
   modalHeader: {
-    fontSize: 20,
-    fontWeight: 'bold',
     marginBottom: 20,
   },
 

@@ -1,14 +1,32 @@
-import * as React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {Color, FontSize, FontFamily, Border} from '../GlobalStyles';
 import {useNavigation} from '@react-navigation/native';
 
 const Login = () => {
-  const navigation = useNavigation(); // Access the navigation object
+  const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
     // Navigate to the dashboard page
     navigation.navigate('Dashboard'); // Replace 'Dashboard' with the name of your dashboard screen
+  };
+  const handleSignup = () => {
+    // Navigate to the modal page for signup
+    navigation.navigate('Modal'); // Replace 'SignupModal' with the name of your modal screen
+  };
+
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -19,23 +37,28 @@ const Login = () => {
           resizeMode="cover"
           source={require('../assets/Background.png')}
         />
-        <Image
-          style={[styles.eyePasswordIcon, styles.iconLayout]}
-          resizeMode="cover"
-          source={require('../assets/eye_password.png')}
-        />
-        <Image
-          style={[styles.frame1ContainerChild, styles.frame1ContainerLayout]}
-          resizeMode="cover"
-          source={require('../assets/rectangle-2.png')}
-        />
-        <Text style={[styles.enterYourPassword, styles.enterTypo]}>
-          Enter Your Password
-        </Text>
         <View style={styles.frame1ContainerItem} />
-        <Text style={[styles.enterYourEmail, styles.enterTypo]}>
-          Enter Your Email
-        </Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Your Email"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Enter Your Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry={!showPassword}
+        />
+        <TouchableOpacity
+          style={[styles.eyePasswordIcon, styles.iconLayout]}
+          onPress={toggleShowPassword}>
+          <Image
+            resizeMode="cover"
+            source={require('../assets/eye_password.png')}
+          />
+        </TouchableOpacity>
         <Image
           style={[styles.frame1ContainerInner, styles.frame1ContainerLayout]}
           resizeMode="cover"
@@ -50,7 +73,9 @@ const Login = () => {
         <Text style={[styles.dontHaveAn, styles.orTypo]}>
           {'Don’t have an account? '}
         </Text>
-        <Text style={[styles.signup, styles.signupTypo]}>Signup</Text>
+        <TouchableOpacity onPress={handleSignup}>
+          <Text style={[styles.signup, styles.signupTypo]}>Signup</Text>
+        </TouchableOpacity>
         <View style={[styles.rectangleView, styles.rectangleViewLayout]} />
         <Text style={[styles.loginWithGoogle, styles.loginTypo]}>
           Login with Google
@@ -121,6 +146,19 @@ const Login = () => {
 };
 
 const styles = StyleSheet.create({
+  input: {
+    width: 315,
+    height: 50,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: Color.colorGray_700,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginTop: 25,
+    marginBottom: -5,
+    top: 250,
+    left: 50,
+  },
   images1IconPosition: {
     left: 0,
     top: 0,
@@ -158,7 +196,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   signupTypo: {
-    top: 531,
+    top: 390,
     fontFamily: FontFamily.poppinsMedium,
     fontWeight: '500',
   },
@@ -169,7 +207,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     height: 48,
     width: 312,
-    borderRadius: Border.br_3xs,
+    borderRadius: 10, // Increase the borderRadius value for a more cylindrical appearance
     left: 51,
     position: 'absolute',
   },
@@ -217,10 +255,6 @@ const styles = StyleSheet.create({
     backgroundColor: Color.colorGray_600,
     width: 313,
     height: 49,
-    borderWidth: 1,
-    borderColor: Color.colorGray_1000,
-    borderStyle: 'solid',
-    borderRadius: Border.br_3xs,
     left: 51,
     position: 'absolute',
   },
@@ -268,7 +302,7 @@ const styles = StyleSheet.create({
     top: 593,
   },
   loginWithGoogle: {
-    top: 602,
+    top: 605,
   },
   googleLogoIcon: {
     top: 604,
@@ -377,7 +411,7 @@ const styles = StyleSheet.create({
   },
   image10Icon: {
     top: 51,
-    left: 143,
+    left: 150,
     width: 103,
     height: 103,
     position: 'absolute',
@@ -393,6 +427,12 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     height: 731,
     width: '100%',
+  },
+  buttonText: {
+    color: Color.baseWhite, // Change text color to white
+    fontSize: FontSize.textSmMedium_size,
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: '600',
   },
 });
 
